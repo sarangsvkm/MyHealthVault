@@ -14,9 +14,10 @@ import java.util.*;
 @RequestMapping("/api/v1/health")
 public class HealthController {
     private final HealthRecordRepository repo;
-    private static final Set<String> PROVIDERS = Set.of("APPLE_HEALTH","HEALTH_CONNECT","MANUAL");
+    private static final Set<String> PROVIDERS = Set.of("APPLE_HEALTH","HEALTH_CONNECT","MANUAL","KERALA_FIT");
     private static final Set<String> TYPES = Set.of("STEPS","HEART_RATE","WEIGHT","HEIGHT",
-        "BLOOD_PRESSURE_SYSTOLIC","BLOOD_PRESSURE_DIASTOLIC","BLOOD_GLUCOSE","SLEEP_MINUTES");
+        "BLOOD_PRESSURE_SYSTOLIC","BLOOD_PRESSURE_DIASTOLIC","BLOOD_GLUCOSE","SLEEP_MINUTES",
+        "CALORIES_BURNED","CALORIES_INTAKE","WATER_ML");
 
     public HealthController(HealthRecordRepository repo) { this.repo=repo; }
 
