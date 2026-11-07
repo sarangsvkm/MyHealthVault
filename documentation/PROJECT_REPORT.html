@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyHealthVault — Formal Engineering Project Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --navy: #0f172a;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg-light: #f8fafc;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background-color: #f1f5f9;
+      line-height: 1.65;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .report-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #ffffff;
+      padding: 60px 70px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      border-radius: 8px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .report-container {
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        max-width: 100%;
+      }
+      .page-break {
+        page-break-after: always;
+        break-after: page;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    /* Print / Action Bar */
+    .action-bar {
+      max-width: 900px;
+      margin: 20px auto 0 auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    /* Cover Page */
+    .cover-page {
+      min-height: 850px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      padding: 40px 20px;
+      border: 3px double #cbd5e1;
+      border-radius: 6px;
+      margin-bottom: 50px;
+    }
+
+    .cover-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .cover-header h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .cover-title-box {
+      margin: 40px 0;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      padding: 4px 14px;
+      background-color: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+      font-size: 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .cover-title {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+
+    .cover-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .tech-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 25px;
+    }
+
+    .tech-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      background-color: #f1f5f9;
+      color: #475569;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .cover-footer {
+      display: flex;
+      justify-content: space-between;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+      font-size: 13px;
+    }
+
+    .cover-footer-block strong {
+      display: block;
+      color: var(--navy);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    /* Headings & Typography */
+    h1, h2, h3, h4, h5 {
+      color: var(--navy);
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    h1 {
+      font-size: 26px;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 8px;
+      margin: 40px 0 20px 0;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin: 30px 0 14px 0;
+      color: #0369a1;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 20px 0 10px 0;
+    }
+
+    p {
+      margin-bottom: 14px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin: 10px 0 16px 24px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 12.5px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f8fafc;
+      color: var(--navy);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11.5px;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafbfc;
+    }
+
+    /* Callouts & Highlights */
+    .callout {
+      border-left: 4px solid var(--primary);
+      background-color: #f0f9ff;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: #0369a1;
+      margin-bottom: 4px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Code blocks */
+    pre, code {
+      font-family: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    pre {
+      background-color: var(--navy);
+      color: #f8fafc;
+      padding: 16px 20px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 12px;
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+
+    code {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    /* Diagrams & Visuals */
+    .diagram-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      background: #fafbfc;
+      margin: 20px 0;
+    }
+
+    .diagram-caption {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+
+    .badge-status-pass {
+      display: inline-block;
+      padding: 2px 8px;
+      background-color: #dcfce7;
+      color: #15803d;
+      font-weight: 700;
+      font-size: 11px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="action-bar no-print">
+    <button class="btn" onclick="window.print()">
+      🖨️ Print / Save as PDF
+    </button>
+  </div>
+
+  <div class="report-container">
+
+    <!-- ==================== COVER PAGE ==================== -->
+    <div class="cover-page">
+      <div class="cover-header">
+        <h3>Academic & Engineering Project Report</h3>
+        <h4>Personal Health Record & Biomedical Systems</h4>
+      </div>
+
+      <div class="cover-title-box">
+        <span class="badge-tag">Final Submission v1.0</span>
+        <h1 class="cover-title">MYHEALTHVAULT</h1>
+        <p class="cover-subtitle">
+          A Secure, Cross-Platform Personal Health Record (PHR) Management System with Native Wearables & ABDM Health Gateway
+        </p>
+
+        <div class="tech-pills">
+          <span class="tech-pill">React Native Expo</span>
+          <span class="tech-pill">TypeScript</span>
+          <span class="tech-pill">Java 21</span>
+          <span class="tech-pill">Spring Boot 3.5</span>
+          <span class="tech-pill">PostgreSQL 16</span>
+          <span class="tech-pill">Apple HealthKit</span>
+          <span class="tech-pill">Android Health Connect</span>
+          <span class="tech-pill">ABDM / ABHA</span>
+          <span class="tech-pill">Docker</span>
+        </div>
+      </div>
+
+      <div class="cover-footer">
+        <div class="cover-footer-block">
+          <strong>Prepared By:</strong>
+          <p>Sarang S</p>
+          <p>Lead Full-Stack & Systems Developer</p>
+          <p>Kerala, India</p>
+        </div>
+        <div class="cover-footer-block" style="text-align: right;">
+          <strong>Submitted For:</strong>
+          <p>Project Evaluation & Technical Review</p>
+          <p>Academic Year 2026</p>
+          <p>Date: November 2026</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==================== ABSTRACT ==================== -->
+    <h1>1. Executive Summary & Abstract</h1>
+    <p>
+      In modern healthcare ecosystems, personal health information is heavily fragmented across physical paper records, standalone diagnostic laboratory portals, hospital electronic management systems, and proprietary wearable hardware (e.g., Apple Health, Google Fit). This fragmentation deprives both patients and clinical physicians of a comprehensive longitudinal overview of patient vitals and diagnostic history, leading to redundant tests, delayed treatments, and severe vulnerabilities during acute medical emergencies.
+    </p>
+    <p>
+      <strong>MyHealthVault</strong> is an enterprise-grade, cross-platform Personal Health Record (PHR) management system engineered to provide complete patient sovereignty, end-to-end data security, and uninterrupted access to lifetime medical data. Developed with a high-performance <strong>React Native (Expo SDK 54, TypeScript)</strong> mobile application and an enterprise-ready <strong>Java 21 / Spring Boot 3.5.12</strong> REST API backed by <strong>PostgreSQL</strong>, MyHealthVault seamlessly unites hardware wearable measurements and clinical diagnostic documents.
+    </p>
+    <div class="callout">
+      <div class="callout-title">Core Value Propositions</div>
+      <ul>
+        <li><strong>Continuous Vitals Ingestion:</strong> Hardware-level integration with Apple HealthKit and Android Health Connect for resting heart rate, step count, blood pressure, oxygen saturation ($SpO_2$), and sleep phases.</li>
+        <li><strong>Secure Medical Repository:</strong> Path-traversal-proof diagnostic document storage for PDF lab reports, doctor prescriptions, and radiology scans.</li>
+        <li><strong>Idempotent Deduplication:</strong> Unique compound index hashing ensuring repeat synchronizations never inflate the patient database with duplicate data points.</li>
+        <li><strong>National Digital Health Ready:</strong> Dedicated architectural boundary supporting India's Ayushman Bharat Digital Mission (ABDM) and Ayushman Bharat Health Account (ABHA) consent flows.</li>
+      </ul>
+    </div>
+
+    <!-- ==================== CHAPTER 1 ==================== -->
+    <h1>2. Chapter 1: Introduction & Problem Statement</h1>
+    <h2>1.1 Background & Motivation</h2>
+    <p>
+      Healthcare delivery is undergoing a profound paradigm shift from episodic, reactive treatments to continuous, proactive, and preventive care. Everyday individuals continuously produce vital health telemetry via smartwatches and activity bands while routinely amassing diagnostic blood tests, pharmacy slips, and ultrasound imaging scans throughout their lives.
+    </p>
+    <p>
+      Despite the vast volume of personal health data generated, individuals face critical interoperability boundaries. An individual consulting a specialist physician rarely has immediate access to past blood panels performed at independent labs or historical resting heart rate trends captured over the preceding quarter.
+    </p>
+
+    <h2>1.2 Problem Statement</h2>
+    <p>Existing health management solutions suffer from three fundamental bottlenecks:</p>
+    <ol>
+      <li><strong>Physical Paper Vulnerability:</strong> Paper documents and printed thermal scan receipts rapidly deteriorate, are prone to total loss, and are completely inaccessible during remote emergencies.</li>
+      <li><strong>Walled Gardens:</strong> Apple Health is constrained to iOS, and Google Health Connect is exclusive to Android. Switching smartphones historically led to the abandonment of personal fitness and biometric history.</li>
+      <li><strong>Separation of Sensors and Clinical Records:</strong> Mainstream fitness trackers do not archive PDF pathology reports, while hospital diagnostic portals never capture continuous daily resting heart rate or sleep duration.</li>
+    </ol>
+
+    <h2>1.3 Project Objectives</h2>
+    <ul>
+      <li>Develop a responsive cross-platform mobile application supporting Android and iOS using React Native Expo and TypeScript.</li>
+      <li>Engineer an enterprise REST API using Java 21, Spring Boot 3.5.12, Spring Security 6, and PostgreSQL with sub-100ms response profiles.</li>
+      <li>Incorporate native mobile bridge adapters for Apple HealthKit and Android Health Connect to read physiological metrics directly from device daemons.</li>
+      <li>Build a national health integration layer compatible with the ABHA / ABDM consent framework.</li>
+      <li>Implement rigorous zero-trust security controls, including BCrypt password hashing, signed JWT authentication, path-traversal-proof file streaming, and immutable audit logs.</li>
+    </ul>
+
+    <!-- ==================== CHAPTER 2 ==================== -->
+    <h1>3. Chapter 2: System Analysis & Feasibility</h1>
+    <h2>2.1 Comparative Analysis</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th>Physical Paper</th>
+          <th>Apple Health / Google Fit</th>
+          <th>Hospital Portals</th>
+          <th>MyHealthVault</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cross-Platform</strong></td>
+          <td>Physical only</td>
+          <td>OS Walled Garden</td>
+          <td>Web Browser Only</td>
+          <td><strong>Android, iOS, Web & Cloud</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Combined Data</strong></td>
+          <td>Manual folders</td>
+          <td>Sensor telemetry only</td>
+          <td>Hospital visits only</td>
+          <td><strong>Telemetry + Pathology PDFs</strong></td>
+        </tr>
+        <tr>
+          <td><strong>ABDM / ABHA Ready</strong></td>
+          <td>None</td>
+          <td>None</td>
+          <td>Proprietary HMIS</td>
+          <td><strong>Native Consent Gateway</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Self-Hostable</strong></td>
+          <td>No</td>
+          <td>No (Proprietary)</td>
+          <td>No (Hospital Server)</td>
+          <td><strong>Dockerized Deployment</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Deduplication</strong></td>
+          <td>N/A</td>
+          <td>Periodic duplicates</td>
+          <td>None</td>
+          <td><strong>Zero-Duplicate Source Index</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>2.2 Hardware & Software Specifications</h2>
+    <ul>
+      <li><strong>Server Runtime:</strong> Java Development Kit (JDK 21 LTS), Spring Boot 3.5.12, Maven 3.9+.</li>
+      <li><strong>Database System:</strong> PostgreSQL 16 with <code>pgcrypto</code> extension, Flyway 10+.</li>
+      <li><strong>Mobile Client:</strong> Node.js v20+, Expo SDK 54, React Native 0.81, TypeScript 5, Axios.</li>
+      <li><strong>Target Devices:</strong> Android 9.0+ (API Level 28+) with Health Connect; iOS 15.0+ with HealthKit.</li>
+      <li><strong>Containerization:</strong> Docker Engine 26+, Docker Compose v2.</li>
+    </ul>
+
+    <!-- ==================== CHAPTER 3 ==================== -->
+    <h1>4. Chapter 3: System Architecture & Database Design</h1>
+    <h2>3.1 Three-Tier System Architecture</h2>
+    <div class="diagram-card">
+      <pre>
++-------------------------------------------------------------------------+
+|                       TIER 1: MOBILE CLIENT LAYER                       |
+|           React Native (Expo SDK 54) + TypeScript + Axios               |
+|   [Dashboard Screen]  [Reports Vault]  [Sync Manager]  [Connections]    |
+|             \                 |                 /                       |
+|        [Apple HealthKit]     [Android Health Connect]                   |
++-------------------------------------------------------------------------+
+                                    |
+                          HTTPS / Bearer JWT
+                                    v
++-------------------------------------------------------------------------+
+|                    TIER 2: SPRING BOOT 3.5 API LAYER                    |
+|             Java 21 Virtual Threads + Spring Security 6                 |
+|   [JwtAuthFilter]  [AuthController]  [HealthController]                 |
+|   [ReportController]  [AbdmController]  [JwtService]                    |
++-------------------------------------------------------------------------+
+                         /                     \
+                   JPA / SQL              Binary File I/O
+                       v                         v
++-------------------------------+  +--------------------------------------+
+| TIER 3A: POSTGRESQL 16 DB     |  | TIER 3B: PRIVATE STORAGE VOLUME      |
+| Users, Records, Reports Meta, |  | Isolated Filesystem Directory        |
+| Consent, Audit Events         |  | Path-traversal proof storage         |
++-------------------------------+  +--------------------------------------+
+      </pre>
+      <div class="diagram-caption">Figure 3.1: High-Level Three-Tier Engineering Architecture</div>
+    </div>
+
+    <h2>3.2 Database Schema & Data Dictionary</h2>
+    <p>
+      The relational PostgreSQL database schema is established using immutable Flyway migrations (<code>V1__initial_schema.sql</code>):
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Table Name</th>
+          <th>Primary Key</th>
+          <th>Foreign Keys</th>
+          <th>Purpose & Functional Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>app_user</code></td>
+          <td><code>id (UUID)</code></td>
+          <td>None</td>
+          <td>Stores user account profiles, unique email addresses, and BCrypt credential hashes.</td>
+        </tr>
+        <tr>
+          <td><code>health_connection</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; app_user.id</code></td>
+          <td>Tracks connected wearable providers, status, and JSONB granted permission arrays.</td>
+        </tr>
+        <tr>
+          <td><code>health_record</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; app_user.id</code></td>
+          <td>Stores biometric readings (Heart Rate, Steps, SpO2) with numeric values and timestamps.</td>
+        </tr>
+        <tr>
+          <td><code>medical_report</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; app_user.id</code></td>
+          <td>Tracks uploaded diagnostic documents, storage keys, MIME types, and file sizes.</td>
+        </tr>
+        <tr>
+          <td><code>import_job</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; app_user.id</code></td>
+          <td>Maintains batch ingestion records, counters (total, imported, skipped, failed), and error logs.</td>
+        </tr>
+        <tr>
+          <td><code>consent_event</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; app_user.id</code></td>
+          <td>Audit records of user-granted and revoked data-sharing consents under ABDM specifications.</td>
+        </tr>
+        <tr>
+          <td><code>audit_event</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; app_user.id</code></td>
+          <td>Zero-trust security audit trail of authentication, data export, and report downloads.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-title">Idempotency & Deduplication Engine</div>
+      <p>
+        To prevent identical biometric entries during continuous syncing, the database enforces a partial unique constraint:
+      </p>
+      <pre>CREATE UNIQUE INDEX uq_health_record_source
+ON health_record(user_id, provider, source_record_id)
+WHERE source_record_id IS NOT NULL;</pre>
+      <p>
+        Any wearable sample already ingested by unique client UUID is automatically skipped, achieving true idempotency.
+      </p>
+    </div>
+
+    <!-- ==================== CHAPTER 4 ==================== -->
+    <h1>5. Chapter 4: Module Implementation & Code Architecture</h1>
+    <h2>4.1 Medical Report Upload with Path-Traversal Prevention</h2>
+    <p>
+      In <code>ReportController.java</code>, file uploads are verified against directory escaping attacks:
+    </p>
+    <pre>
+Path target = storageDir.resolve(storageKey).normalize();
+if (!target.startsWith(storageDir)) {
+    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid storage path");
+}
+Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
+    </pre>
+
+    <h2>4.2 Native Wearable Sensor Ingestion (TypeScript)</h2>
+    <p>
+      Mobile adapters in <code>services/health/</code> handle on-device permission handshakes. Sample HealthKit ingestion adapter:
+    </p>
+    <pre>
+export async function fetchAppleHealthHeartRate(startDate: Date): Promise<HealthRecordPayload[]> {
+  return new Promise((resolve, reject) => {
+    const options = { startDate: startDate.toISOString() };
+    AppleHealthKit.getHeartRateSamples(options, (err, results) => {
+      if (err) return reject(err);
+      const mapped = results.map(sample => ({
+        provider: 'APPLE_HEALTH',
+        recordType: 'HEART_RATE',
+        value: sample.value,
+        unit: 'bpm',
+        startTime: sample.startDate,
+        endTime: sample.endDate,
+        sourceRecordId: sample.id
+      }));
+      resolve(mapped);
+    });
+  });
+}
+    </pre>
+
+    <!-- ==================== CHAPTER 5 ==================== -->
+    <h1>6. Chapter 5: Verification, Testing & QA Matrix</h1>
+    <p>
+      The system underwent comprehensive unit, integration, and security verification:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Module</th>
+          <th>Test Scenario</th>
+          <th>Expected Outcome</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TC-01</strong></td>
+          <td>Auth</td>
+          <td>User Registration</td>
+          <td>201 Created, BCrypt password stored</td>
+          <td><span class="badge-status-pass">PASSED</span></td>
+        </tr>
+        <tr>
+          <td><strong>TC-02</strong></td>
+          <td>Auth</td>
+          <td>Duplicate Email Registration</td>
+          <td>400 Bad Request, Duplicate rejected</td>
+          <td><span class="badge-status-pass">PASSED</span></td>
+        </tr>
+        <tr>
+          <td><strong>TC-03</strong></td>
+          <td>Security</td>
+          <td>API Access without Token</td>
+          <td>401 Unauthorized</td>
+          <td><span class="badge-status-pass">PASSED</span></td>
+        </tr>
+        <tr>
+          <td><strong>TC-04</strong></td>
+          <td>Reports</td>
+          <td>Path Traversal Exploit (<code>../../etc</code>)</td>
+          <td>400 Bad Request, Target normalized & blocked</td>
+          <td><span class="badge-status-pass">PASSED</span></td>
+        </tr>
+        <tr>
+          <td><strong>TC-05</strong></td>
+          <td>Sync</td>
+          <td>Batch Ingestion (50 samples)</td>
+          <td>200 OK, 50 records stored in DB</td>
+          <td><span class="badge-status-pass">PASSED</span></td>
+        </tr>
+        <tr>
+          <td><strong>TC-06</strong></td>
+          <td>Sync</td>
+          <td>Re-sync Same 50 samples</td>
+          <td>Duplicate records skipped; 0 duplicate rows</td>
+          <td><span class="badge-status-pass">PASSED</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ==================== CHAPTER 6 ==================== -->
+    <h1>7. Chapter 6: Conclusion & Future Scope</h1>
+    <p>
+      <strong>MyHealthVault</strong> resolves the pervasive fragmentation of modern personal health records by offering a secure, self-sovereign, cross-platform health vault. By bridging daily lifestyle telemetry from smart wearables with diagnostic pathology files and national health identifiers (ABDM), the platform provides patients with complete control and uninterrupted accessibility over their lifetime healthcare data.
+    </p>
+    <p>
+      <strong>Future Roadmap (v2.0):</strong>
+    </p>
+    <ul>
+      <li>Integration of on-device LLMs (Gemini / MedLM) to parse uploaded blood tests and highlight out-of-range biomarkers automatically.</li>
+      <li>Longitudinal biomarker trend graphs charting multi-year cholesterol and glucose trajectories.</li>
+      <li>Lock-screen emergency QR code allowing first responders to retrieve blood type and allergy profiles without smartphone passcode unlocking.</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- ==================== REFERENCES ==================== -->
+    <h1>8. References & Bibliography</h1>
+    <ol>
+      <li>VMware Tanzu. <em>Spring Boot Reference Guide (v3.5)</em>. Available at: <code>https://docs.spring.io/spring-boot/</code></li>
+      <li>Expo Team. <em>Expo SDK 54 Reference & Native Module Guides</em>. Available at: <code>https://docs.expo.dev/</code></li>
+      <li>Apple Inc. <em>HealthKit Framework Reference & Permissions Model</em>. Available at: <code>https://developer.apple.com/documentation/healthkit</code></li>
+      <li>Google LLC. <em>Health Connect API Developer Guide</em>. Available at: <code>https://developer.android.com/health-and-fitness/guides/health-connect</code></li>
+      <li>National Health Authority (NHA), Government of India. <em>Ayushman Bharat Digital Mission (ABDM) Technical Architecture</em>. Available at: <code>https://abdm.gov.in/</code></li>
+      <li>OWASP Foundation. <em>OWASP Top 10 API Security Risks</em>. Available at: <code>https://owasp.org/www-project-api-security/</code></li>
+      <li>Redgate. <em>Database Migrations with Flyway</em>. Available at: <code>https://flywaydb.org/</code></li>
+      <li>PostgreSQL Global Development Group. <em>PostgreSQL 16 Documentation</em>. Available at: <code>https://www.postgresql.org/docs/</code></li>
+    </ol>
+
+  </div>
+
+</body>
+</html>

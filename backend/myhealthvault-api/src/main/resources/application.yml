@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  error:
+    include-message: never
+
+spring:
+  application:
+    name: myhealthvault-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/myhealthvault}
+    username: ${SPRING_DATASOURCE_USERNAME:myhealthvault}
+    password: ${SPRING_DATASOURCE_PASSWORD:local_dev_change_me}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 22MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:local-only-change-this-secret-32-characters-minimum}
+    expiration-minutes: 30
+  storage:
+    directory: ${APP_STORAGE_DIR:./private-health-files}
+    max-file-bytes: 20971520
+  abdm:
+    mode: ${ABDM_MODE:disabled}
+    base-url: ${ABDM_BASE_URL:}
+    client-id: ${ABDM_CLIENT_ID:}
+    client-secret: ${ABDM_CLIENT_SECRET:}
+    callback-base-url: ${ABDM_CALLBACK_BASE_URL:}
