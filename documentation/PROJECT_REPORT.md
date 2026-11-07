@@ -723,3 +723,4 @@ The system enforces rigorous security standards—safeguarding sensitive patient
 6. **OWASP Foundation:** *OWASP Top 10 API Security Risks (2023 Edition)*. [https://owasp.org/www-project-api-security/](https://owasp.org/www-project-api-security/)
 7. **Flyway Community:** Redgate. *Database Migrations with Flyway*. [https://flywaydb.org/documentation/](https://flywaydb.org/documentation/)
 8. **PostgreSQL Global Development Group:** *PostgreSQL 16 Documentation: pgcrypto & JSONB Operations*. [https://www.postgresql.org/docs/](https://www.postgresql.org/docs/)
+
