@@ -37,3 +37,4 @@ public class CoachController {
         return "🌴 Kerala Fit AI Coach:\n\nFor a healthy Kerala lifestyle: prioritize steamed foods (Idli, Appam, Puttu), choose fish curry over deep fried items, include Sambar and Avial for micronutrients, and walk at least 30 minutes daily. Log your meals consistently for best insights!";
     }
 }
+

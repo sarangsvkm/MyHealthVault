@@ -48,3 +48,4 @@ public class FitnessFoodLog {
     public String getMealType() { return mealType; }
     public Instant getLoggedAt() { return loggedAt; }
 }
+

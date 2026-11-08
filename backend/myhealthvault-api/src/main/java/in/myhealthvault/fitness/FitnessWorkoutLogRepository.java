@@ -7,3 +7,4 @@ import java.util.UUID;
 public interface FitnessWorkoutLogRepository extends JpaRepository<FitnessWorkoutLog, UUID> {
     List<FitnessWorkoutLog> findByUserIdOrderByCompletedAtDesc(UUID userId);
 }
+

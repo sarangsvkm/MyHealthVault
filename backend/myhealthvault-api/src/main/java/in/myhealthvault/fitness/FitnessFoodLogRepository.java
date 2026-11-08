@@ -7,3 +7,4 @@ import java.util.UUID;
 public interface FitnessFoodLogRepository extends JpaRepository<FitnessFoodLog, UUID> {
     List<FitnessFoodLog> findByUserIdOrderByLoggedAtDesc(UUID userId);
 }
+

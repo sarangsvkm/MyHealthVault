@@ -38,3 +38,4 @@ public class FitnessWorkoutLog {
     public Integer getDurationMinutes() { return durationMinutes; }
     public Instant getCompletedAt() { return completedAt; }
 }
+

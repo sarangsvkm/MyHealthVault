@@ -20,3 +20,4 @@ CREATE TABLE fitness_workout_log (
 );
 
 CREATE INDEX ix_fitness_workout_user ON fitness_workout_log(user_id, completed_at DESC);
+

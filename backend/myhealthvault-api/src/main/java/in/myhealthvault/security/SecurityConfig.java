@@ -13,14 +13,18 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwt) throws Exception {
         return http.csrf(csrf -> csrf.disable())
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**", "/api/auth/**", "/actuator/health", "/api/v1/coach/**", "/api/coach/**").permitAll()
-                .anyRequest().authenticated())
-            .addFilterBefore(jwt, UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/auth/**", "/api/auth/**", "/actuator/health", "/api/v1/coach/**",
+                                "/api/coach/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwt, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(12); }
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
 }
