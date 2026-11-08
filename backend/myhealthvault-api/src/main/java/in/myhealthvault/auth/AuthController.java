@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping({"/api/v1/auth", "/api/auth"})
 public class AuthController {
     private final AppUserRepository users;
     private final PasswordEncoder encoder;
@@ -21,7 +21,7 @@ public class AuthController {
     }
 
     public record RegisterRequest(@Email @NotBlank String email,
-        @Size(min=12, max=72) String password, @NotBlank @Size(max=120) String displayName) {}
+        @Size(min=6, max=72) String password, @NotBlank @Size(max=120) String displayName) {}
     public record LoginRequest(@Email @NotBlank String email, @NotBlank String password) {}
 
     @PostMapping("/register")
